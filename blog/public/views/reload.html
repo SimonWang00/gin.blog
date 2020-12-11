@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{.title}}</title>
+    <script>
+        setInterval("myInterval()",3000);//1000为1秒钟
+        function myInterval()
+        {
+            window.location.href='http://127.0.0.1:8081/contact';
+        }
+    </script>
+</head>
+<body>
+    <div>{{.message}}</div>
+</body>
+</html>

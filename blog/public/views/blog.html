@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="cn" dir="ltr" class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="maximum-scale=1.0,width=device-width,initial-scale=1.0,user-scalable=no">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>王大维的博客 </title>
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link title="style2" href="../assets/css/style.css" rel="stylesheet"/>
+    <link href="../assets/css/nprogress.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/nivo-slider.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../assets/css/default.css" type="text/css" media="screen" />
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/jquery.nivo.slider.pack.js"></script>
+    <script src="../assets/js/nprogress.js"></script>
+</head>
+
+<body>
+
+{{ template "header" }}
+
+{{ template "leftbar" }}
+
+<!--Start banner img-->
+{{ template "banner" }}
+<!--End banner img-->
+<div class="container-fluid main-container" id="main-container">
+    <div class="row">
+        <div class="col-md-12 top-title">
+            <h2 class="page-title">
+                博客文章
+            </h2>
+        </div>
+    </div>
+    <!-- 文章容器-->
+    {{ range $_, $article := .articles }}
+    <div class="row">
+        <div class="col-md-12 post-container">
+            <h2 class="post-title"  style="font: 20px -apple-system; color: #0366D6">
+                <a href="/blog?id={{$article.Id}}" title="">{{$article.Title}}</a>
+            </h2>
+            <div class="meta-box">
+            <span class="m-post-date" style="font: 12px -apple-system; color: #586069">
+              <i class="fa fa-calendar-o">
+              </i>
+              {{$article.CreateTime}}
+            </span>
+            <span class="comments-link">
+              <a href="" class="ds-thread-count" data-thread-key="9500" title="Comment on">
+                  <i class="fa fa-comments-o">
+                  </i>
+                  留言
+              </a>
+            </span>
+            </div>
+            <div class="post-content" style="font: 18px -apple-system; color: #24292E">
+                <p>
+                    {{$article.Summary}}
+                </p>
+            </div>
+            <div class="meta-box">
+            <span class="cat-links"  style="font: 14px -apple-system; color: #586069">
+              <i class="fa fa-navicon">
+              </i>
+              <b>
+                  分类:
+              </b>
+              <a href="/blog?classify={{ $article.Classify }}">
+                  {{$article.Classify}}
+              </a>
+            </span>
+            <span class="tag-links" style="font: 14px -apple-system; color: #586069">
+              <i class="fa fa-tags">
+              </i>
+              <b>
+                  标签:
+              </b>
+              <a href="#" rel="tag" style="font: 14px -apple-system; color: #586069">
+                  {{$article.Tag}}
+              </a>
+            </span>
+            </div>
+        </div>
+    </div>
+
+    {{end}}
+
+    </div>
+    <!--分页进入第二页，一页多少可分配-->
+    <div class="row post-pagination">
+        <div class="col-md-12">
+            <p>
+                <a href="" class="btn btn-primary btn-sm">
+              <span class="glyphicon glyphicon-refresh">
+              </span>
+              <span>
+                浏览之前的文章
+              </span>
+                </a>
+            </p>
+        </div>
+    </div>
+    <!--评论内容-->
+    <div class="row page-comments-container">
+        <div class="col-md-12">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+    </div>
+
+    {{ template  "footer" }}
+
+</div>
+{{template "slider"}}
+</body>
+
+</html>

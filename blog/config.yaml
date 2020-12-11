@@ -1,0 +1,34 @@
+APP:
+  NAME: blog
+  RUNMODE: debug # 模式: debug, release, gotest
+  Addr: :8081 # 端口
+  URL: http://localhost:8080 # 网站 url，内部跳转时会用到该项
+  KEY: asfffffffff3q
+  ENABLE_CSRF: true # 是否开启 csrf
+
+DB:
+  CONNECTION: mysql
+  HOST: 127.0.0.1
+  PORT: 3306
+  DATABASE: blog
+  USERNAME: root
+  PASSWORD: 000000
+
+
+MAIL:
+  MAIL_HOST: smtp.qq.com # smtp or log (smtp: 使用支持 ESMTP 的 SMTP 服务器发送邮件，log: 适用于调试，会将邮件内容写入 log 中)
+  MAIL_PORT: 465  # 邮箱的 SMTP 服务器端口
+  MAIL_FROM: 763646402@qq.com   # 发送邮箱
+  MAIL_PASSWORD: ojyeijohshodbbfh # 授权码或密码
+  MAIL_TO: bw_wangxiaomeng@whty.com.cn,763646402@qq.com # 接收者
+  MAIL_CC:  # 抄送
+
+LOG:
+  WRITERS: file,stdout # 输出位置，有两个可选项 —— file 和 stdout。选择 file 会将日志记录到 logger_file 指定的日志文件中，选择 stdout 会将日志输出到标准输出，当然也可以两者同时选择
+  LOGGER_LEVEL: DEBUG # 日志级别，DEBUG、INFO、WARN、ERROR、FATAL
+  LOGGER_FILE: logs/api.log # 日志文件
+  LOG_FORMAT_TEXT: false # 日志的输出格式，JSON 或者 plaintext，true 会输出成 JSON 格式，false 会输出成非 JSON 格式
+  ROLLING_POLICY: size # rotate 依据，可选的有 daily 和 size。如果选 daily 则根据天进行转存，如果是 size 则根据大小进行转存
+  LOG_ROTATE_DATE: 1 # rotate 转存时间，配 合rollingPolicy: daily 使用
+  LOG_ROTATE_SIZE: 1000 # rotate 转存大小，配合 rollingPolicy: size 使用 (大于 1000mb 会压缩为 zip)
+  LOG_BACKUP_COUNT: 7 # 当日志文件达到转存标准时，log 系统会将该日志文件进行压缩备份，这里指定了备份文件的最大个数
