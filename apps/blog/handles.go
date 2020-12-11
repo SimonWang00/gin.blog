@@ -42,11 +42,7 @@ func BlogHandler(c *gin.Context)  {
 	// 根据分类查询所有文章
 	if classify != ""{
 		articles, totalblogs := dao.QueryAriticleByclassify(classify, page, pagesize)
-		pages := int(math.Ceil(float64(totalblogs)/10))
-		var page_arr []int
-		for i:=0; i < pages; i++ {
-			page_arr = append(page_arr, i+1)
-		}
+		page_arr := limitPage(totalblogs, page)
 		c.HTML(http.StatusOK, "blog.html",gin.H{
 			"classify":classify,
 			"articles":articles,
@@ -66,17 +62,28 @@ func BlogHandler(c *gin.Context)  {
 		return
 	}
 	articles, totalblogs := dao.QueryAllAriticle(page, pagesize)
-	pages := int(math.Ceil(float64(totalblogs)/10))
-	var page_arr []int
-	for i:=0; i < pages; i++ {
-		page_arr = append(page_arr, i+1)
-	}
+	page_arr := limitPage(totalblogs, page)
 	c.HTML(http.StatusOK, "blog.html",gin.H{
 		"classify":"",
 		"articles":articles,
 		"pages":page_arr,
 		"currentpage":page,
 	})
+}
+
+// 只显示五页
+func limitPage(totalblogs int, currentpage int) []int {
+	var page_arr []int
+	pages := int(math.Ceil(float64(totalblogs)/10))
+	for i:=0; i < pages; i++ {
+		if i >= currentpage{
+			page_arr = append(page_arr, i+1)
+		}
+		if len(page_arr) >= 5{
+			break
+		}
+	}
+	return page_arr
 }
 
 // 关于页面
