@@ -7,6 +7,7 @@ package blog
 
 import (
 	"github.com/gin-gonic/gin"
+	"math"
 	"mygit.com/SimonWang00/blog/dao"
 	"net/http"
 	"strconv"
@@ -40,9 +41,17 @@ func BlogHandler(c *gin.Context)  {
 	classify := c.Query("classify")
 	// 根据分类查询所有文章
 	if classify != ""{
-		articles := dao.QueryAriticleByclassify(classify, page, pagesize)
+		articles, totalblogs := dao.QueryAriticleByclassify(classify, page, pagesize)
+		pages := int(math.Ceil(float64(totalblogs)/10))
+		var page_arr []int
+		for i:=0; i < pages; i++ {
+			page_arr = append(page_arr, i+1)
+		}
 		c.HTML(http.StatusOK, "blog.html",gin.H{
+			"classify":classify,
 			"articles":articles,
+			"pages":page_arr,
+			"currentpage":page,
 		})
 		return
 	}
@@ -56,9 +65,17 @@ func BlogHandler(c *gin.Context)  {
 		})
 		return
 	}
-	articles := dao.QueryAllAriticle(page, pagesize)
+	articles, totalblogs := dao.QueryAllAriticle(page, pagesize)
+	pages := int(math.Ceil(float64(totalblogs)/10))
+	var page_arr []int
+	for i:=0; i < pages; i++ {
+		page_arr = append(page_arr, i+1)
+	}
 	c.HTML(http.StatusOK, "blog.html",gin.H{
+		"classify":"",
 		"articles":articles,
+		"pages":page_arr,
+		"currentpage":page,
 	})
 }
 
