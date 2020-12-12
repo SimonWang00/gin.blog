@@ -6,8 +6,8 @@ package main
 //Date  : 2020/12/8
 
 import (
-	"blog/config"
-	"blog/routes"
+	"gin.blog/config"
+	"gin.blog/routes"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
