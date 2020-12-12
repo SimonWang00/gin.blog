@@ -6,8 +6,8 @@ package dao
 //Date  : 2020/12/9
 
 import (
-	"blog/config"
 	"errors"
+	"gin.blog/config"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	"log"
@@ -73,21 +73,23 @@ func QueryLatestAriticle()  *[]Ariticle{
 }
 
 // QueryAllAriticle 查询所有文章
-func QueryAllAriticle(page int, pagesize int) *[]Ariticle {
+func QueryAllAriticle(page int, pagesize int) (*[]Ariticle , int){
 	var ariticles []Ariticle
-	db.Select([]string{"id","title","summary","content","classify","tag","create_time"}).
-		Order("create_time desc").Limit(pagesize).
+	var totalblogs int
+	db.Model(Ariticle{}).Select([]string{"id","title","summary","content","classify","tag","create_time"}).
+		Order("create_time desc").Limit(pagesize).Count(&totalblogs).
 		Offset((page-1)*pagesize).Find(&ariticles)
-	return &ariticles
+	return &ariticles, totalblogs
 }
 
 // QueryAriticleByclassify 通过分类查询所有文章
-func QueryAriticleByclassify(classify string, page int, pagesize int) *[]Ariticle {
+func QueryAriticleByclassify(classify string, page int, pagesize int) (*[]Ariticle , int) {
 	var ariticles []Ariticle
-	db.Where("classify = ?", classify).
+	var totalblogs int
+	db.Model(Ariticle{}).Where("classify = ?", classify).Count(&totalblogs).
 		Select([]string{"id","title","summary","content","classify","tag","create_time"}).
 		Order("create_time desc").Limit(pagesize).Offset((page-1)*pagesize).Find(&ariticles)
-	return &ariticles
+	return &ariticles, totalblogs
 }
 
 // QueryAriticleById 通过id 查询文章
@@ -134,7 +136,7 @@ func QueryAllMessage(page int, pagesize int) (*[]Message, int) {
 // QueryLatestWork 主页拉取最新的3个作品
 func QueryLatestWork()  *[]Work{
 	var works []Work
-	db.Select([]string{"title","about","star_num","fork_num","language"}).Limit(3).Find(&works)
+	db.Select([]string{"title","about","star_num","fork_num","language","url"}).Limit(3).Find(&works)
 	return &works
 }
 
@@ -151,6 +153,26 @@ func AddMesage(name, email,content string ) error {
 
 	}
 	if err := db.Create(mess).Error; err != nil{
+		log.Printf("insert message error(%v)", err.Error())
+		return err
+	}
+	return nil
+}
+
+// 新增作品
+func AddWork(title, about, starNum, forkNum, language,url string ) error {
+	if title == "" || about == "" || starNum == "" || forkNum == "" || language == "" {
+		return errors.New("请求参数为空！")
+	}
+	work := &Work{
+		Title:title,
+		About:about,
+		StarNum:starNum,
+		ForkNum:forkNum,
+		Language:language,
+		Url:url,
+	}
+	if err := db.Create(work).Error; err != nil{
 		log.Printf("insert message error(%v)", err.Error())
 		return err
 	}

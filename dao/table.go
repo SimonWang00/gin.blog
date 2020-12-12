@@ -37,6 +37,7 @@ type work struct {
 	StarNum string		`gorm:"type:int;default 0"`			//star数量
 	ForkNum string		`gorm:"type:int;default 0"`			//fork数量
 	Language string		`gorm:"type:varchar(10);not null"`	//编程语言
+	Url string			`gorm:"type:varchar(200);not null"`	//作品链接
 }
 
 // 定义表
