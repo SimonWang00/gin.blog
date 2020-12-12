@@ -123,25 +123,16 @@
             <div class="row post-pagination">
                 <div class="col-md-12">
                     <ul class="pagination">
-                        {{range $_,$page := .pages}}
-                            {{if gt $page 1}}
+                        {{range $index,$page := .pages}}
                         <li><a href="/blog?page={{$page}}&pagesize=10">«</a></li>
-                            {{else}}
-                        <li><a href="#">«</a></li>
-                            {{end}}
                         <li><a href="/blog?page={{$page}}&pagesize=10">{{$page}}</a></li>
-                            {{if lt $page 2}}
-                        <li><a href="/blog?page={{$page}}&pagesize=10">»</a></li>
-                            {{else}}
                         <li><a >»</a></li>
-                            {{end}}
                         {{end}}
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-
 
     <!--评论内容-->
     <div class="row page-comments-container">
