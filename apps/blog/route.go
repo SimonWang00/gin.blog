@@ -7,28 +7,27 @@ package blog
 import (
 	middleware "gin.blog/middleware"
 	"github.com/gin-gonic/gin"
-	"net/http"
 	"time"
 )
 
 // 加载blog的路由
 func LoadBlog(g *gin.Engine)  {
-	// 限制每秒钟5000次请求
+	// 请求主页 限制每秒钟5000次请求
 	g.GET("/",middleware.RateLimiter(1*time.Minute, 3000000), HomeHandler)
-	g.GET("/gin.blog",middleware.RateLimiter(1*time.Minute, 3000000), BlogHandler)
+	// 请求博客页面
+	g.GET("/blog",middleware.RateLimiter(1*time.Minute, 3000000), BlogHandler)
+	// 请求关于我
 	g.GET("/about", AboutHandler)
-	g.GET("/works", WorkHandler)
+	// 外链
 	g.GET("/links", LinkHandler)
+	// 留言
 	g.GET("/contact", ContactHandler)
+	// 新增留言
 	g.POST("/contact", InsertMessage)
-	g.GET("/test", func(c *gin.Context) {
-		xv:=[][]int{}
-		c.JSON(http.StatusOK,
-			gin.H{
-				"code":        http.StatusOK,
-				"status":      "请输入有效的搜索词！",
-				"total_count": 0,
-				"data":        xv,
-			})
-	})
+	// 我的作品
+	g.GET("/works", WorkHandler)
+	// 新增作品
+	g.POST("/works", InsertWork)
+	// 发布作品
+	g.GET("/public/work", PublicWork)
 }

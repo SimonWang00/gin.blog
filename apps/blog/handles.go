@@ -6,7 +6,7 @@ package blog
 //Date  : 2020/12/8
 
 import (
-	"blog/dao"
+	"gin.blog/dao"
 	"github.com/gin-gonic/gin"
 	"math"
 	"net/http"
@@ -43,7 +43,7 @@ func BlogHandler(c *gin.Context)  {
 	if classify != ""{
 		articles, totalblogs := dao.QueryAriticleByclassify(classify, page, pagesize)
 		page_arr := limitPage(totalblogs, page)
-		c.HTML(http.StatusOK, "gin.blog.html",gin.H{
+		c.HTML(http.StatusOK, "blog.html",gin.H{
 			"classify":classify,
 			"articles":articles,
 			"pages":page_arr,
@@ -63,7 +63,7 @@ func BlogHandler(c *gin.Context)  {
 	}
 	articles, totalblogs := dao.QueryAllAriticle(page, pagesize)
 	page_arr := limitPage(totalblogs, page)
-	c.HTML(http.StatusOK, "gin.blog.html",gin.H{
+	c.HTML(http.StatusOK, "blog.html",gin.H{
 		"classify":"",
 		"articles":articles,
 		"pages":page_arr,
@@ -128,6 +128,7 @@ func InsertMessage(c *gin.Context)  {
 	if contact_name == "" || contact_email == "" || contact_con == "" {
 		c.HTML(http.StatusBadRequest, "reload.html", gin.H{
 			"title":"留言添加失败",
+			"url":"/contact",
 			"message":"留言请求参数不能为空， 3秒钟后跳转到留言页面",
 		})
 		return
@@ -136,12 +137,52 @@ func InsertMessage(c *gin.Context)  {
 	if err != nil{
 		c.HTML(http.StatusInternalServerError, "reload.html", gin.H{
 			"title":"留言添加失败",
+			"url":"/contact",
 			"message":"留言新增失败，请重试！ 3秒钟后跳转到留言页面",
 		})
 		return
 	}
-	c.HTML(http.StatusInternalServerError, "reload.html", gin.H{
+	c.HTML(http.StatusOK, "reload.html", gin.H{
 		"title":"留言添加成功！",
+		"url":"/contact",
 		"message":"留言成功！博主看到会第一时间回复你的哦~~， 3秒钟后跳转到留言页面",
 	})
+}
+
+
+// 新增作品
+func InsertWork(c *gin.Context)  {
+	title, _ := c.GetPostForm("title")
+	about, _ := c.GetPostForm("about")
+	starNum, _ := c.GetPostForm("starNum")
+	forkNum, _ := c.GetPostForm("forkNum")
+	language, _ := c.GetPostForm("language")
+	url, _ := c.GetPostForm("url")
+	if title == "" || about == "" || starNum == "" || forkNum == "" || language == "" {
+		c.HTML(http.StatusBadRequest, "reload.html", gin.H{
+			"title":"作品添加失败",
+			"url":"/works",
+			"message":"作品信息录入不完整， 3秒钟后跳转到作品页面",
+		})
+		return
+	}
+	err := dao.AddWork(title, about, starNum, forkNum, language, url)
+	if err != nil{
+		c.HTML(http.StatusInternalServerError, "reload.html", gin.H{
+			"title":"作品添加失败",
+			"url":"/works",
+			"message":"作品新增失败，请重试！ 3秒钟后跳转到作品页面",
+		})
+		return
+	}
+	c.HTML(http.StatusOK, "reload.html", gin.H{
+		"title":"作品添加成功！",
+		"url":"/works",
+		"message":"作品添加成功哦~~， 3秒钟后跳转到作品页面",
+	})
+}
+
+// 发布作品页面
+func PublicWork(c *gin.Context)  {
+	c.HTML(http.StatusOK, "publicwork.html", "")
 }
