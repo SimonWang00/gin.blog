@@ -6,10 +6,10 @@ package main
 //Date  : 2020/12/8
 
 import (
+	"blog/config"
+	"blog/routes"
 	"github.com/gin-gonic/gin"
 	"log"
-	"mygit.com/SimonWang00/blog/config"
-	"mygit.com/SimonWang00/blog/routes"
 	"net/http"
 	"sync"
 )

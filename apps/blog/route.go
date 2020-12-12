@@ -5,8 +5,8 @@ package blog
 //Describe: describle your function
 //Date  : 2020/12/8
 import (
+	middleware "blog/middleware"
 	"github.com/gin-gonic/gin"
-	middleware "mygit.com/SimonWang00/blog/middleware"
 	"net/http"
 	"time"
 )

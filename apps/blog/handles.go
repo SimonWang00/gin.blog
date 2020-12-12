@@ -6,9 +6,9 @@ package blog
 //Date  : 2020/12/8
 
 import (
+	"blog/dao"
 	"github.com/gin-gonic/gin"
 	"math"
-	"mygit.com/SimonWang00/blog/dao"
 	"net/http"
 	"strconv"
 )

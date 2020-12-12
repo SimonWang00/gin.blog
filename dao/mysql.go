@@ -6,11 +6,11 @@ package dao
 //Date  : 2020/12/9
 
 import (
+	"blog/config"
 	"errors"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	"log"
-	"mygit.com/SimonWang00/blog/config"
 	"time"
 )
 

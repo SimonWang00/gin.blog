@@ -5,8 +5,8 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 
-	"mygit.com/SimonWang00/blog/apps/blog"
-	"mygit.com/SimonWang00/blog/config"
+	"blog/apps/blog"
+	"blog/config"
 )
 
 // Register 注册路由和中间件
