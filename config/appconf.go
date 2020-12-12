@@ -39,7 +39,7 @@ type appConfig struct {
 
 func newAppConfig() *appConfig {
 	// 默认配置
-	easyconfig.SetDefault("APP.NAME", "blog")
+	easyconfig.SetDefault("APP.NAME", "gin.blog")
 	easyconfig.SetDefault("APP.RUNMODE", "release")
 	easyconfig.SetDefault("APP.ADDR", ":8080")
 	easyconfig.SetDefault("APP.KEY", "weqtrwyrererererererererereresdfbsg")

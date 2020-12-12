@@ -25,7 +25,7 @@ func main() {
 
 // hello 调试请求
 func hello(c *gin.Context)  {
-	c.String(http.StatusOK,"Welcom to my blog!")
+	c.String(http.StatusOK,"Welcom to my gin.blog!")
 }
 
 // startWebServer 启动web服务

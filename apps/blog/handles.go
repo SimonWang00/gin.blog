@@ -25,7 +25,7 @@ func HomeHandler(c *gin.Context)  {
 	})
 }
 
-// blog
+// gin.blog
 func BlogHandler(c *gin.Context)  {
 	var page, pagesize int
 	pagestr := c.Query("page")
@@ -43,7 +43,7 @@ func BlogHandler(c *gin.Context)  {
 	if classify != ""{
 		articles, totalblogs := dao.QueryAriticleByclassify(classify, page, pagesize)
 		page_arr := limitPage(totalblogs, page)
-		c.HTML(http.StatusOK, "blog.html",gin.H{
+		c.HTML(http.StatusOK, "gin.blog.html",gin.H{
 			"classify":classify,
 			"articles":articles,
 			"pages":page_arr,
@@ -63,7 +63,7 @@ func BlogHandler(c *gin.Context)  {
 	}
 	articles, totalblogs := dao.QueryAllAriticle(page, pagesize)
 	page_arr := limitPage(totalblogs, page)
-	c.HTML(http.StatusOK, "blog.html",gin.H{
+	c.HTML(http.StatusOK, "gin.blog.html",gin.H{
 		"classify":"",
 		"articles":articles,
 		"pages":page_arr,

@@ -5,7 +5,7 @@ package blog
 //Describe: describle your function
 //Date  : 2020/12/8
 import (
-	middleware "blog/middleware"
+	middleware "gin.blog/middleware"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"time"
@@ -15,7 +15,7 @@ import (
 func LoadBlog(g *gin.Engine)  {
 	// 限制每秒钟5000次请求
 	g.GET("/",middleware.RateLimiter(1*time.Minute, 3000000), HomeHandler)
-	g.GET("/blog",middleware.RateLimiter(1*time.Minute, 3000000), BlogHandler)
+	g.GET("/gin.blog",middleware.RateLimiter(1*time.Minute, 3000000), BlogHandler)
 	g.GET("/about", AboutHandler)
 	g.GET("/works", WorkHandler)
 	g.GET("/links", LinkHandler)
