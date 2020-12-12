@@ -86,6 +86,15 @@ func limitPage(totalblogs int, currentpage int) []int {
 	return page_arr
 }
 
+// 生成翻页链接
+// /blog?classify=classify&page=1&pagesize=10
+// /blog?page=1&pagesize=10
+func generatePageLink(classify string,totalblogs int, currentpage int ) []string {
+	var links [] string
+	page_arr := limitPage(totalblogs, currentpage)
+	return links
+}
+
 // 关于页面
 func AboutHandler(c *gin.Context)  {
 	c.HTML(http.StatusOK, "about.html","")
