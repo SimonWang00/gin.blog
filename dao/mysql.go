@@ -178,3 +178,13 @@ func AddWork(title, about, starNum, forkNum, language,url string ) error {
 	}
 	return nil
 }
+
+// QueryAllWork 查询所有作品
+func QueryAllWork(page int, pagesize int) (*[]Work , int){
+	var works []Work
+	var totalblogs int
+	db.Model(Work{}).Select([]string{"id","title","about","star_num","fork_num","language","url"}).
+		Limit(pagesize).Count(&totalblogs).
+		Offset((page-1)*pagesize).Find(&works)
+	return &works, totalblogs
+}
