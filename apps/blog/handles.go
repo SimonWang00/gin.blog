@@ -6,6 +6,7 @@ package blog
 //Date  : 2020/12/8
 
 import (
+	"fmt"
 	"gin.blog/dao"
 	"github.com/gin-gonic/gin"
 	"math"
@@ -42,11 +43,12 @@ func BlogHandler(c *gin.Context)  {
 	// 根据分类查询所有文章
 	if classify != ""{
 		articles, totalblogs := dao.QueryAriticleByclassify(classify, page, pagesize)
-		page_arr := limitPage(totalblogs, page)
+		page_map := generatePageLink(classify, totalblogs, page)
+		//pages := int(math.Ceil(float64(totalblogs)/10))
 		c.HTML(http.StatusOK, "blog.html",gin.H{
 			"classify":classify,
 			"articles":articles,
-			"pages":page_arr,
+			"pages":page_map,
 			"currentpage":page,
 		})
 		return
@@ -62,37 +64,42 @@ func BlogHandler(c *gin.Context)  {
 		return
 	}
 	articles, totalblogs := dao.QueryAllAriticle(page, pagesize)
-	page_arr := limitPage(totalblogs, page)
+	page_map := generatePageLink(classify, totalblogs, page)
+	//pages := int(math.Ceil(float64(totalblogs)/10))
 	c.HTML(http.StatusOK, "blog.html",gin.H{
 		"classify":"",
 		"articles":articles,
-		"pages":page_arr,
+		"pages":page_map,
 		"currentpage":page,
 	})
 }
 
 // 只显示五页
-func limitPage(totalblogs int, currentpage int) []int {
-	var page_arr []int
+func limitPage(classify string, totalblogs int, currentpage int) *map[int]string {
+	page_map := make(map[int]string, 6)
 	pages := int(math.Ceil(float64(totalblogs)/10))
-	for i:=0; i < pages; i++ {
-		if i >= currentpage{
-			page_arr = append(page_arr, i+1)
+	for i:=1; i < pages+1; i++ {
+		if i >= currentpage -1{
+			if i == currentpage{
+				page_map[i] = "#"
+			} else {
+				pagestr := fmt.Sprintf("blog?classify=%v&page=%v&pagesize=%v" ,classify, i,10)
+				page_map[i] = pagestr
+			}
 		}
-		if len(page_arr) >= 5{
+		if len(page_map) >= 5{
 			break
 		}
 	}
-	return page_arr
+	return &page_map
 }
 
 // 生成翻页链接
 // /blog?classify=classify&page=1&pagesize=10
 // /blog?page=1&pagesize=10
-func generatePageLink(classify string,totalblogs int, currentpage int ) []string {
-	var links [] string
-	page_arr := limitPage(totalblogs, currentpage)
-	return links
+func generatePageLink(classify string,totalblogs int, currentpage int ) *map[int]string {
+	page_map := limitPage(classify, totalblogs, currentpage)
+	return page_map
 }
 
 // 关于页面
