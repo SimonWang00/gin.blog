@@ -124,9 +124,7 @@
                 <div class="col-md-12">
                     <ul class="pagination">
                         {{range $index,$page := .pages}}
-                        <li><a href="/blog?page={{$page}}&pagesize=10">«</a></li>
-                        <li><a href="/blog?page={{$page}}&pagesize=10">{{$page}}</a></li>
-                        <li><a >»</a></li>
+                        <li><a href="{{$page}}">{{$index}}</a></li>
                         {{end}}
                     </ul>
                 </div>
