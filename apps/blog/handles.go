@@ -29,6 +29,7 @@ func HomeHandler(c *gin.Context)  {
 // gin.blog
 func BlogHandler(c *gin.Context)  {
 	var page, pagesize int
+	var path  = "/blog"
 	pagestr := c.Query("page")
 	page, err := strconv.Atoi(pagestr)
 	if err != nil{
@@ -43,7 +44,7 @@ func BlogHandler(c *gin.Context)  {
 	// 根据分类查询所有文章
 	if classify != ""{
 		articles, totalblogs := dao.QueryAriticleByclassify(classify, page, pagesize)
-		page_map := generatePageLink(classify, totalblogs, page)
+		page_map := generatePageLink(path, classify, totalblogs, page, pagesize)
 		//pages := int(math.Ceil(float64(totalblogs)/10))
 		c.HTML(http.StatusOK, "blog.html",gin.H{
 			"classify":classify,
@@ -64,7 +65,7 @@ func BlogHandler(c *gin.Context)  {
 		return
 	}
 	articles, totalblogs := dao.QueryAllAriticle(page, pagesize)
-	page_map := generatePageLink(classify, totalblogs, page)
+	page_map := generatePageLink(path, classify, totalblogs, page, pagesize)
 	//pages := int(math.Ceil(float64(totalblogs)/10))
 	c.HTML(http.StatusOK, "blog.html",gin.H{
 		"classify":"",
@@ -75,15 +76,15 @@ func BlogHandler(c *gin.Context)  {
 }
 
 // 只显示五页
-func limitPage(classify string, totalblogs int, currentpage int) *map[int]string {
+func limitPage(path string, classify string, totalblogs int, currentpage int, pagesize int) *map[int]string {
 	page_map := make(map[int]string, 6)
-	pages := int(math.Ceil(float64(totalblogs)/10))
+	pages := int(math.Ceil(float64(totalblogs)/float64(pagesize)))
 	for i:=1; i < pages+1; i++ {
 		if i >= currentpage -1{
 			if i == currentpage{
 				page_map[i] = "#"
 			} else {
-				pagestr := fmt.Sprintf("blog?classify=%v&page=%v&pagesize=%v" ,classify, i,10)
+				pagestr := fmt.Sprintf("%v?classify=%v&page=%v&pagesize=%v", path ,classify, i,pagesize)
 				page_map[i] = pagestr
 			}
 		}
@@ -97,8 +98,8 @@ func limitPage(classify string, totalblogs int, currentpage int) *map[int]string
 // 生成翻页链接
 // /blog?classify=classify&page=1&pagesize=10
 // /blog?page=1&pagesize=10
-func generatePageLink(classify string,totalblogs int, currentpage int ) *map[int]string {
-	page_map := limitPage(classify, totalblogs, currentpage)
+func generatePageLink(path string, classify string,totalblogs int, currentpage int , pagesize int) *map[int]string {
+	page_map := limitPage(path, classify, totalblogs, currentpage, pagesize)
 	return page_map
 }
 
@@ -109,7 +110,24 @@ func AboutHandler(c *gin.Context)  {
 
 // 作品页面
 func WorkHandler(c *gin.Context)  {
-	c.HTML(http.StatusOK, "works.html","")
+	var page, pagesize int
+	var path = "/works"
+	pagestr := c.Query("page")
+	page, err := strconv.Atoi(pagestr)
+	if err != nil{
+		page = 1
+	}
+	pagesizestr := c.Query("pagesize")
+	pagesize, err = strconv.Atoi(pagesizestr)
+	if err != nil{
+		pagesize = 9
+	}
+	works, pages := dao.QueryAllWork(page, pagesize)
+	page_map := generatePageLink(path, "", pages, page, pagesize)
+	c.HTML(http.StatusOK, "works.html",gin.H{
+		"works":works,
+		"pages":page_map,
+	})
 }
 
 // 链接页面
