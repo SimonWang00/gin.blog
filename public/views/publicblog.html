@@ -8,7 +8,7 @@
     <meta name="viewport" content="maximum-scale=1.0,width=device-width,initial-scale=1.0,user-scalable=no">
     <meta name="keywords" content="">
     <meta name="description" content="">
-    <title>发布个人作品 </title>
+    <title>发布个人博客 </title>
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../assets/css/style.css" rel="stylesheet" />
     <link href="../assets/css/nprogress.css" rel="stylesheet" />
@@ -35,7 +35,7 @@
     <div class="row">
         <div class="col-md-12">
             <h2 class="page-title">
-                <a href="/public/work" title="">发布作品</a>
+                <a href="/public/blog" title="">发布博客</a>
             </h2>
         </div>
     </div>
@@ -43,71 +43,38 @@
     <div class="row">
         <div class="col-md-12 post-container">
             <div class="post-content">
-                <form method="post" action="/works" id="form1" class="contact-form">
+                <form method="post" action="/blog" id="form1" class="contact-form">
                     <div>
-                      <span>
-                        <label>
-                            作品名称*
-                        </label>
-                      </span>
+                        <h2 class="post-title">
+                            <span>
+                                文章标题*
+                            </span>
+                        </h2>
                       <span>
                         <input name="title" type="text" class="textbox">
                       </span>
                     </div>
                     <div>
                       <span>
-                        <label>
-                            作品简介*
-                        </label>
+                            概要*
                       </span>
                       <span>
-                        <textarea name="about" class="textbox">
+                        <textarea name="content" class="textbox">
                         </textarea>
                       </span>
                     </div>
                     <div>
                       <span>
-                        <label>
-                            编程语言*
-                        </label>
+                            正文*
                       </span>
                         <span>
-                        <input name="language" type="text" class="textbox">
+                        <textarea name="content" class="textbox">
+                        </textarea>
                       </span>
                     </div>
                     <div>
                       <span>
-                        <label>
-                            star数量*
-                        </label>
-                      </span>
-                        <span>
-                        <input name="starNum" type="text" class="textbox">
-                      </span>
-                    </div>
-                    <div>
-                      <span>
-                        <label>
-                            fork数量*
-                        </label>
-                      </span>
-                        <span>
-                        <input name="forkNum" type="text" class="textbox">
-                      </span>
-                    </div>
-                    <div>
-                      <span>
-                        <label>
-                            作品链接*
-                        </label>
-                      </span>
-                        <span>
-                        <input name="url" type="text" class="textbox">
-                      </span>
-                    </div>
-                    <div>
-                      <span>
-                        <input type="submit" value="提交" name="tijiao">
+                        <input type="submit" value="发布博文" name="tijiao">
                       </span>
                     </div>
                 </form>
