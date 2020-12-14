@@ -30,4 +30,6 @@ func LoadBlog(g *gin.Engine)  {
 	g.POST("/works", InsertWork)
 	// 发布作品
 	g.GET("/public/work", PublicWork)
+	// 发布博文
+	g.GET("/public/blog", PublicBlog)
 }

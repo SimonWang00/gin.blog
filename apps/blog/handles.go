@@ -220,3 +220,8 @@ func InsertWork(c *gin.Context)  {
 func PublicWork(c *gin.Context)  {
 	c.HTML(http.StatusOK, "publicwork.html", "")
 }
+
+// 发布博文
+func PublicBlog(c *gin.Context)  {
+	c.HTML(http.StatusOK, "publicblog2.html", "")
+}
