@@ -2,7 +2,7 @@ package main
 
 //File  : blogserver.go
 //Author: Simon
-//Describe: describle your function
+//Describe: application
 //Date  : 2020/12/8
 
 import (
@@ -20,7 +20,6 @@ func main() {
 	wg := sync.WaitGroup{}
 	wg.Add(1)
 	wg.Wait()
-
 }
 
 // hello 调试请求
