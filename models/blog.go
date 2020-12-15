@@ -1,14 +1,14 @@
-package dao
+package blog
 
 import "time"
 
-//File  : table.go
+//File  : model.go
 //Author: Simon
 //Describe: define mysql table
 //Date  : 2020/12/9
 
 // 文章
-type ariticle struct {
+type Ariticle struct {
 	Id int				`gorm:"primary_key"`
 	Title string		`gorm:"type:varchar(50);not null"`	//文章标题
 	Summary string		`gorm:"type:varchar(255);not null"`	//文章概要
@@ -20,7 +20,7 @@ type ariticle struct {
 
 
 // 留言
-type message struct {
+type Message struct {
 	Id int					`gorm:"primary_key"`
 	Name string				`gorm:"type:varchar(50);not null"`		//留言者昵称
 	Mail string				`gorm:"type:varchar(50);not null"`		//留言者邮箱
@@ -30,7 +30,7 @@ type message struct {
 
 
 // 作品
-type work struct {
+type Work struct {
 	Id int				`gorm:"primary_key"`
 	Title string		`gorm:"type:varchar(50);not null"`	//作品标题
 	About string		`gorm:"type:varchar(255);not null"`	//作品简介
@@ -39,10 +39,3 @@ type work struct {
 	Language string		`gorm:"type:varchar(10);not null"`	//编程语言
 	Url string			`gorm:"type:varchar(200);not null"`	//作品链接
 }
-
-// 定义表
-type (
-	Ariticle ariticle
-	Work work
-	Message message
-)

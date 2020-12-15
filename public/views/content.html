@@ -6,37 +6,37 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="maximum-scale=1.0,width=device-width,initial-scale=1.0,user-scalable=no">
-    <meta name="keywords" content="">
-    <meta name="description" content="">
     <title>{{.article.Title}} </title>
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../assets/css/style.css" rel="stylesheet" />
+    <link href="../assets/css/mdstyle.css" rel="stylesheet" />
+    <link href="../assets/css/editormd.css" rel="stylesheet" />
     <link href="../assets/css/nprogress.css" rel="stylesheet" />
     <link rel="stylesheet" href="../assets/css/nivo-slider.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="../assets/css/default.css" type="text/css" media="screen" />
     <script src="../assets/js/jquery.min.js"></script>
-    <link rel="stylesheet" href="../assets/APlayer/dist/APlayer.min.css">
     <script src="../assets/js/jquery.nivo.slider.pack.js"></script>
     <script src="../assets/js/nprogress.js"></script>
+    <style type="text/css">
+        #editormd {
+            font-size: 18px;
+            color: #4d4d4d;
+            font-weight: 400;
+            line-height: 26px;
+            margin: 0 0 16px;
+        }
+    </style>
 </head>
 
 <body>
-
 {{ template "header" }}
-
 {{ template "leftbar" }}
 
-<!--Start banner img-->
-{{ template "banner" }}
+<div class="container-filed" id="banner_container">
+</div>
+
 <!--End banner img-->
 <div class="container-fluid main-container" id="main-container">
-    <div class="row top-title">
-        <div class="col-md-12">
-            <h1 class="page-title right">
-                <a href="/blog">博客</a> >> <a href="#">{{.article.Title}}</a>
-            </h1>
-        </div>
-    </div>
     <div class="row">
         <div class="col-md-12 post-container">
             <h2 class="post-title">
@@ -47,20 +47,10 @@
             <div class="meta-box">
             </div>
             <div class="post-content">
-                <p>
-                    {{.article.Summary}}
-                </p>
+                <div id="doc-content" style="width: 85%;">
+                    <textarea id="editormd" style="display: none;" >{{.article.Content}}</textarea>
+                </div>
                 <hr/>
-                <section>
-                    <div class="main-container">
-                        <div class="row">
-                            <p>
-                                {{.article.Content}}
-                            </p>
-                            <div id="player3" class="aplayer"></div>
-                        </div>
-                    </div>
-                </section>
                 <div class="meta-box">
                 </div>
             </div>
@@ -73,13 +63,38 @@
         </div>
     </div>
 
-
     {{ template  "footer" }}
 
 </div>
-<script src="../assets/APlayer/dist/APlayer.min.js"></script>
-<script src="../assets/APlayer/demo/demo.js"></script>
-{{template "slider"}}
-</body>
+<script src="../assets/lib/marked.min.js"></script>
+<script src="../assets/lib/prettify.min.js"></script>
+<script src="../assets/lib/underscore.min.js"></script>
+<script src="../assets/lib/sequence-diagram.min.js"></script>
+<script src="../assets/lib/flowchart.min.js"></script>
+<script src="../assets/lib/jquery.flowchart.min.js"></script>
+<script src="../assets/js/editormd.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../assets/js/jquery.min.js"></script>
+<script type="text/javascript">
+    var testEditor;
+    $(function() {
+        testEditor = editormd.markdownToHTML("doc-content", {
+            htmlDecode : "style,script,iframe",
+            emoji : true,
+            taskList : true,
+            tex : true, // 默认不解析
+            flowChart : true, // 默认不解析
+            sequenceDiagram : true, // 默认不解析
+            codeFold : true,
+        });
+    });
+    $(function() {
+        testEditor = editormd("editormd", {
+            width: "85%",
+            height: 720,
+            path: "../assets/lib/"
+        });
+    });
+</script>
 
+</body>
 </html>
