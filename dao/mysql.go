@@ -138,7 +138,7 @@ func AddMesage(name, email,content string ) error {
 		Name:name,
 		Mail:email,
 		Content:content,
-		CreateTime:time.Now(),
+		CreateTime:time.Now().Format("2006-01-02 15:04:05"),
 
 	}
 	if err := db.Create(mess).Error; err != nil{
@@ -191,7 +191,7 @@ func AddBlog(title, content, classify string)  error{
 		Content:    content,
 		Classify:   classify,
 		Tag:        tag,
-		CreateTime: time.Now(),
+		CreateTime: time.Now().Format("2006-01-02 15:04:05"),
 	}
 	if err := db.Create(blog).Error; err != nil{
 		log.Printf("insert blog error(%v)", err.Error())

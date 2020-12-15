@@ -1,7 +1,5 @@
 package models
 
-import "time"
-
 //File  : tag.go
 //Author: Simon
 //Describe: define mysql table
@@ -15,7 +13,7 @@ type Article struct {
 	Content string		`gorm:"type:longtext;not null"`		//文章内容
 	Classify string		`gorm:"type:varchar(10);not null"`	//文章分类
 	Tag string			`gorm:"type:varchar(50);not null"`	//文章标签
-	CreateTime time.Time									//发表时间
+	CreateTime string	`gorm:"type:datetime;not null"`		//发表时间
 }
 
 
@@ -25,7 +23,7 @@ type Message struct {
 	Name string				`gorm:"type:varchar(50);not null"`		//留言者昵称
 	Mail string				`gorm:"type:varchar(50);not null"`		//留言者邮箱
 	Content string			`gorm:"type:varchar(50);not null"`		//留言内容
-	CreateTime time.Time											//留言时间
+	CreateTime string		`gorm:"type:datetime;not null"`			//留言时间
 }
 
 
