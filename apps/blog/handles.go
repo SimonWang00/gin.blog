@@ -216,6 +216,35 @@ func InsertWork(c *gin.Context)  {
 	})
 }
 
+// 新增博文
+func InsertBlog(c *gin.Context)  {
+	title, _ := c.GetPostForm("title")
+	content, _ := c.GetPostForm("content")
+	classify, _ := c.GetPostForm("classify")
+	if title == "" || content == "" || classify == "" {
+		c.HTML(http.StatusBadRequest, "reload.html", gin.H{
+			"title":"博客添加失败",
+			"url":"/blog",
+			"message":"博客信息录入不完整， 3秒钟后跳转到博客页面",
+		})
+		return
+	}
+	err := dao.AddBlog(title, content, classify)
+	if err != nil{
+		c.HTML(http.StatusInternalServerError, "reload.html", gin.H{
+			"title":"博客添加失败",
+			"url":"/blog",
+			"message":"博客新增失败，请重试！ 3秒钟后跳转到博客页面",
+		})
+		return
+	}
+	c.HTML(http.StatusOK, "reload.html", gin.H{
+		"title":"博客添加成功！",
+		"url":"/blog",
+		"message":"博客添加成功哦~~， 3秒钟后跳转到博客页面",
+	})
+}
+
 // 发布作品页面
 func PublicWork(c *gin.Context)  {
 	c.HTML(http.StatusOK, "publicwork.html", "")
@@ -223,5 +252,5 @@ func PublicWork(c *gin.Context)  {
 
 // 发布博文
 func PublicBlog(c *gin.Context)  {
-	c.HTML(http.StatusOK, "publicblog2.html", "")
+	c.HTML(http.StatusOK, "publicblog.html", "")
 }

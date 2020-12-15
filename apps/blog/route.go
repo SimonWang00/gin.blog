@@ -16,6 +16,10 @@ func LoadBlog(g *gin.Engine)  {
 	g.GET("/",middleware.RateLimiter(1*time.Minute, 3000000), HomeHandler)
 	// 请求博客页面
 	g.GET("/blog",middleware.RateLimiter(1*time.Minute, 3000000), BlogHandler)
+	// 新增博文
+	g.POST("/blog", InsertBlog)
+	// 发布博文
+	g.GET("/public/blog", PublicBlog)
 	// 请求关于我
 	g.GET("/about", AboutHandler)
 	// 外链
@@ -30,6 +34,5 @@ func LoadBlog(g *gin.Engine)  {
 	g.POST("/works", InsertWork)
 	// 发布作品
 	g.GET("/public/work", PublicWork)
-	// 发布博文
-	g.GET("/public/blog", PublicBlog)
+
 }
