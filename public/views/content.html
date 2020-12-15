@@ -30,13 +30,12 @@
 
 <body>
 {{ template "header" }}
-{{ template "leftbar" }}
-
-<div class="container-filed" id="banner_container">
-</div>
 
 <!--End banner img-->
 <div class="container-fluid main-container" id="main-container">
+    <div class="row">
+    </div>
+
     <div class="row">
         <div class="col-md-12 post-container">
             <h2 class="post-title">
@@ -47,15 +46,24 @@
             <div class="meta-box">
             </div>
             <div class="post-content">
+                <p>
+                </p>
+                <hr/>
+
+    <section>
+        <div class="main-container">
+            <div class="row">
                 <div id="doc-content" style="width: 85%;">
                     <textarea id="editormd" style="display: none;" >{{.article.Content}}</textarea>
                 </div>
-                <hr/>
-                <div class="meta-box">
-                </div>
             </div>
         </div>
+    </section>
+    <div class="meta-box">
     </div>
+</div>
+</div>
+</div>
 
     <!--评论内容-->
     <div class="row page-comments-container">
@@ -74,6 +82,7 @@
 <script src="../assets/lib/jquery.flowchart.min.js"></script>
 <script src="../assets/js/editormd.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="../assets/js/jquery.min.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
 <script type="text/javascript">
     var testEditor;
     $(function() {
@@ -95,6 +104,25 @@
         });
     });
 </script>
+<script>
 
+    $(window).load(function() {
+        $('#slider').nivoSlider({
+            effect: 'random',
+            controlNav: false,
+            pauseOnHover: true,
+            manualAdvance: false,
+            animSpeed: 100,
+            pauseTime: 2000,
+        });
+    });
+    $(document).ready(function(){
+        $('body').show();
+        $('.version').text(NProgress.version);
+        NProgress.start();
+        setTimeout(function() { NProgress.done(); $('.fade').removeClass('out'); }, 1000);
+    })
+
+</script>
 </body>
 </html>
