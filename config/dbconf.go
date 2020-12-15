@@ -52,7 +52,7 @@ func newDBConfig() *dbConfig {
 
 // createDBURL 创建mysql连接符
 func createDBURL(uname string, pwd string, host string, port int, name string) string {
-	return fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=%t&loc=%s",
+	return fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=%t&loc=%s",
 		uname, pwd,
 		host, port,
 		name, true, "Local")
