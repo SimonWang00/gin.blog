@@ -1,20 +1,20 @@
-package blog
+package models
 
 import "time"
 
-//File  : model.go
+//File  : tag.go
 //Author: Simon
 //Describe: define mysql table
 //Date  : 2020/12/9
 
 // 文章
-type Ariticle struct {
+type Article struct {
 	Id int				`gorm:"primary_key"`
 	Title string		`gorm:"type:varchar(50);not null"`	//文章标题
-	Summary string		`gorm:"type:varchar(255);not null"`	//文章概要
+	Summary string		`gorm:"type:text;not null"`			//文章概要
 	Content string		`gorm:"type:longtext;not null"`		//文章内容
 	Classify string		`gorm:"type:varchar(10);not null"`	//文章分类
-	Tag string			`gorm:"type:varchar(20);not null"`	//文章标签
+	Tag string			`gorm:"type:varchar(50);not null"`	//文章标签
 	CreateTime time.Time									//发表时间
 }
 
