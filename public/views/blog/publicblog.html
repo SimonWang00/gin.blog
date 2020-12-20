@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>写文章</title>
+    <script src="../../assets/blog/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../assets/blog/css/mdstyle.css" />
+    <link rel="stylesheet" href="../../assets/blog/css/editormd.css" />
+
+    <link href="../../assets/blog/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style type="text/css">
+        #articleTitle{
+            width: 68%;
+            margin-top:15px;
+        }
+        #classify{
+            margin-top:15px;
+            width:10%;
+        }
+        #btnList {
+            color: #00A5E4;
+            position:relative;
+            float:right;
+            margin-top:15px;
+            padding-right:70px;
+        }
+        input {
+            width: 90%;
+            padding: 8px 80px 8px 16px;
+        }
+        textarea{
+            padding: 8px 16px;
+            width: 90%;
+            margin-bottom: 16px;
+        }
+        .article-bar__user-box {
+            padding: 0px 16px;
+            font-size: 16px;
+            margin-left: 30px !important;
+            border: none;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 20px;
+            white-space: nowrap;
+            color: white;
+            background:indianred;
+            background: linear-gradient(92deg,#ffba40,#ff503e 37%,#ff2f50 81%,#ff1b40);
+            font-weight: 400;
+        }
+
+        button#publishArticle
+        {
+            color: white;
+            background:indianred;
+            animation:myfirst 20s;
+            -webkit-animation:myfirst 20s; /* Safari and Chrome */
+        }
+
+        @keyframes myfirst
+        {
+            from {background:red;}
+            to {background:dodgerblue;}
+        }
+
+        @-webkit-keyframes myfirst /* Safari and Chrome */
+        {
+            from {background:red;}
+            to {background:dodgerblue;}
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">
+              Toggle navigation
+            </span>
+                <span class="icon-bar">
+            </span>
+                <span class="icon-bar">
+            </span>
+                <span class="icon-bar">
+            </span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav header-menu">
+                <li>
+                    <a href="/">
+                        首页
+                    </a>
+                </li>
+                <li>
+                    <a href="/blog">
+                        博客
+                    </a>
+                </li>
+                <li>
+                    <a href="/works">
+                        作品
+                    </a>
+                </li>
+                <li>
+                    <a href="/about">
+                        关于
+                    </a>
+                </li>
+                <li>
+                    <a href="/links">
+                        链接
+                    </a>
+                </li>
+                <li>
+                    <a href="/contact">
+                        联系
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+    <div class="container-fluid main-container" id="main-container">
+        <div class="row">
+            <div class="col-md-12 post-container" style="padding: 30px 0px">
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid main-container" id="main-container">
+    <div id="layout" class="row">
+        <div class="col-md-12 page-comments-container" style="padding: 20px">
+            文章标题：<input type="text" id="articleTitle" placeholder="请输入文章标题"/>
+            类别：<input type="text" id="classify" />
+            <span id="btnList">
+				<button type="button" id="publishArticle" onclick="writeArticle.doSubmit();" class="btn btn-info" style="color: white;background: #00A5E4">发布文章</button>
+			</span>
+        </div>
+        <div id="editormd">
+            <span>正文：</span>
+            <textarea id="articleContent" style="display: none;"></textarea>
+        </div>
+        </div>
+            <div id="editormd">
+                <textarea id="articleContent" style="display: none;">
+                </textarea>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="../../assets/blog/js/editormd.min.js"></script>
+<script src="../../assets/blog/js/jquery.min.js"></script>
+<script type="text/javascript">
+    var testEditor;
+
+    $(function() {
+        testEditor = editormd("editormd", {
+            width   : "90%",
+            height  : 640,
+            syncScrolling : "single",
+            path    : "../assets/lib/"
+        });
+    });
+
+    /* 发送文章*/
+    var writeArticle = {
+        doSubmit: function () {//提交
+            if (writeArticle.doCheck()) {
+                //debugger;
+                var title = $("#articleTitle").val();
+                var content = $("#articleContent").val();
+                var classify = $("#classify").val();
+                $.ajax({
+                    type: "POST",
+                    url: '/blog',
+                    data: {'title':title,'content':content,'classify':classify},
+                    dataType:'json',
+                    cache: false,
+                    success: function(data){
+                    }
+                });
+                alert("恭喜您，博客发表成功！")
+                setInterval("", 3000)
+                window.location.href='/blog';
+            }
+        },
+        doCheck: function() {//校验
+            //debugger;
+            var title = $("#articleTitle").val();
+            var content = $("#articleContent").val();
+            if (typeof(title) == undefined || title == null || title == "" ) {
+                alert("请填写文章标题!");
+                return false;
+            }
+
+            if(typeof (content) == undefined || content == null || content == "") {
+                alert("请填写文章内容!");
+                return false;
+            }
+            return true;
+        },
+        myInterval: function (){
+        window.location.href='/blog';
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    var testEditor;
+    $(function() {
+        testEditor = editormd("editormd", {
+            width   : "90%",
+            height  : 720,
+            path    : "../assets/blog/lib/"
+        });
+
+        $("#print-btn").click(function(){
+            var html = testEditor.preview.html();
+
+            document.write('<link rel="stylesheet" href="../../assets/blog/css/mdstyle.css" /><link rel="stylesheet" href="../../assets/blog/css/editormd.css" />' + html);
+            window.print();
+        });
+
+        $("#disabled-btn").click(function(){
+            testEditor.config("pageBreak", false);
+        });
+
+        $("#enabled-btn").click(function(){
+            testEditor.config("pageBreak", true);
+        });
+    });
+</script>
+<!-- 网站底部 -->
+{{ template  "footer" }}
+
+</html>

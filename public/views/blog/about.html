@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="cn" dir="ltr" class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="maximum-scale=1.0,width=device-width,initial-scale=1.0,user-scalable=no">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>异步 </title>
+    <link href="../../assets/blog/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../assets/blog/css/style.css" rel="stylesheet" />
+    <link href="../../assets/blog/css/nprogress.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../assets/blog/css/nivo-slider.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../assets/blog/css/default.css" type="text/css" media="screen" />
+    <script src="../../assets/blog/js/jquery.min.js"></script>
+    <script src="../../assets/blog/js/jquery.nivo.slider.pack.js"></script>
+    <script src="../../assets/blog/js/nprogress.js"></script>
+</head>
+
+<body>
+
+{{ template "header" }}
+
+{{ template "leftbar" }}
+
+<!--Start banner img-->
+
+{{ template "banner" }}
+
+<!--End banner img-->
+<div class="container-fluid main-container" id="main-container">
+    <div class="row top-title">
+        <div class="col-md-12">
+            <h1 class="page-title">
+                关于王大维
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 post-container">
+            <div class="post-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="thumbnail">
+                            <a href="javascript:;">
+                                <img title="关于王大维" src="../../assets/blog/img/about.png" alt="关于王大维"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default" id="simple-intro">
+                    <div class="panel-body">
+                        <h3>
+                            简单概述
+                        </h3>
+                        <p>
+                            学程序是因为有梦想，希望自己以后能够和小伙伴们创建一家属于自己的互联网公司。对前端(FrontEnd) &amp; 交互体验(User Experience)/后端(Backend)/存储(Storage)/等相关技术十分感兴趣，喜欢变着花样（寻求最优方案）去完成想要完成的事情。可以独立设计并完成网站或软件视觉设计，有轻微代码洁癖。
+                        </p>
+                        <p>
+                            我的联系方式：
+                        </p>
+                        <blockquote class="contact-list" id="about-list">
+                            <ul>
+                                <li>
+                                    电子邮箱:
+                                    <kbd>
+                                        simon_wang00@163.com
+                                    </kbd>
+                                </li>
+                                <li>
+                                    腾讯QQ:
+                                    <kbd>
+                                        763646402
+                                    </kbd>
+                                </li>
+
+                                <li>
+                                    我的GIT:
+                                    <kbd>
+                                        https://github.com/SimonWang00
+                                    </kbd>
+                                </li>
+                            </ul>
+                        </blockquote>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-body clearfix">
+                        <h3>
+                            往事如烟
+                        </h3>
+                        <p>
+                            本文作者：王大维
+                        </p>
+                        <p>
+                            专注于「Python/Golang技术栈」，DL小宝微信公众号作者，在IT行业深耕多年，有着诸多实战经验，并写出了诸多实用IT技术干货。
+                        </p>
+                        <p>
+                            如果你有好的原创文章想与大家分享，欢迎投稿。
+                        </p>
+                        <footer class="pull-right">
+                            二零二零年十二月落笔于
+                            <cite title="武汉">
+                                武汉
+                            </cite>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+            <div class="meta-box">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+    </div>
+
+    {{ template  "footer" }}
+
+</div>
+{{template "slider"}}
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+{{define "admin/reload.html"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{.title}}</title>
+    <script>
+        setInterval("myInterval()",3000);//1000为1秒钟
+        function myInterval()
+        {
+            window.location.href='{{.url}}';
+        }
+    </script>
+</head>
+<body>
+    <div>{{.message}}</div>
+</body>
+</html>
+{{end}}
