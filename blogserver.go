@@ -32,9 +32,9 @@ func startWebServer() {
 	// setup my apps routers
 	g := routes.SetRegisterRouters()
 	// 静态资源加载，本项目css,js以及资源图片
-	g.StaticFS("/assets", http.Dir("./public/assets"))
-	g.LoadHTMLGlob("public/views/*")
-	g.GET("/hello",hello)	// 此处用于调试
+	g.StaticFS("/assets/blog", http.Dir("./public/assets/blog"))
+	g.StaticFS("/assets/admin", http.Dir("./public/assets/admin"))
+	g.LoadHTMLGlob("public/views/**/*")
 	// 启动 http server
 	if err := http.ListenAndServe(config.AppConfig.Addr, g); err != nil {
 		log.Fatal("http server 启动失败", err)

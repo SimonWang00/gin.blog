@@ -25,6 +25,7 @@ func init() {
 	db, err = gorm.Open(config.DBConfig.Connection, config.DBConfig.URL)
 	if err != nil {
 		log.Fatal("Database connection failed. Database url: "+config.DBConfig.URL+" error: ", err)
+
 	} else {
 		log.Print("\n\n------------------------------------------ GORM OPEN SUCCESS! -----------------------------------------------\n\n")
 	}
@@ -65,7 +66,24 @@ func createTable()  {
 		}
 		log.Println("WorkTable create suecess!")
 	}
-	log.Println("WorkTable has been created!")
+	if !db.HasTable(&models.Admin{}){
+		err := db.Set("gorm:table_options","ENGINE=InnoDB DEFAULT CHARSET=utf8" ).
+			CreateTable(&models.Admin{}).Error
+		if err != nil{
+			log.Fatalf("create table Admin error(%v)!", err.Error())
+		}
+		log.Println("Admin create suecess!")
+	}
+	log.Println("Admin has been created!")
+	if !db.HasTable(&models.Log{}){
+		err := db.Set("gorm:table_options","ENGINE=InnoDB DEFAULT CHARSET=utf8" ).
+			CreateTable(&models.Log{}).Error
+		if err != nil{
+			log.Fatalf("create table Log error(%v)!", err.Error())
+		}
+		log.Println("Log create suecess!")
+	}
+	log.Println("Log has been created!")
 	log.Println("all tables are ready!")
 }
 
@@ -198,4 +216,62 @@ func AddBlog(title, content, classify string)  error{
 		return err
 	}
 	return nil
+}
+
+// 查询admin中的密码
+func SelectAdmin(username string)  *models.Admin{
+	var admin models.Admin
+	db.First(&admin, "username=?", username)
+	return &admin
+}
+
+// 增加登录日志
+func AddLog(username, ipport, status string)  error{
+	if username == "" ||  ipport == "" ||  status == ""{
+		return errors.New("请求参数为空！")
+	}
+	logs := &models.Log{
+		Username:      username,
+		Ipport:    	   ipport,
+		Status:    	   status,
+		LoginTime: time.Now().Format("2006-01-02 15:04:05"),
+	}
+	if err := db.Create(logs).Error; err != nil{
+		log.Printf("insert logs error(%v)", err.Error())
+		return err
+	}
+	return nil
+}
+
+// 获取最近一次登录信息和登录次数
+func GetLatestLogin(username string) (*models.Log, int, int) {
+	var loginlog models.Log
+	var logincount int
+	var usernum int
+	db.Model(models.Log{}).Select("count(distinct(username))").Count(&usernum)
+	db.Model(models.Log{}).Where("username=?", username).
+		Count(&logincount).Order("login_time desc").
+		First(&loginlog)
+	return &loginlog, logincount, usernum
+}
+
+
+// 获取最新文章和文章数量
+func GetLatestBlog() (*models.Article, int) {
+	var latestarticle models.Article
+	var articlecount int
+	db.Model(models.Article{}).
+		Count(&articlecount).Order("create_time desc").
+		First(&latestarticle)
+	return &latestarticle, articlecount
+}
+
+// 获取最新评论和评论数量
+func GetLatestMessage() (*models.Message, int) {
+	var message models.Message
+	var messagecount int
+	db.Model(models.Message{}).
+		Count(&messagecount).Order("create_time desc").
+		First(&message)
+	return &message, messagecount
 }

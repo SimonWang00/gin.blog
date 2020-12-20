@@ -53,8 +53,8 @@ func newAppConfig() *appConfig {
 		Key:     easyconfig.GetString("APP.KEY"),
 
 		PublicPath:    "public",
-		ResourcesPath: "resources",
-		ViewsPath:     "resources/views",
+		ResourcesPath: "public",
+		ViewsPath:     "public/views",
 
 		EnableCsrf:     easyconfig.GetBool("APP.ENABLE_CSRF"),
 		CsrfParamName:  "_csrf",

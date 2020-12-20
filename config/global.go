@@ -3,7 +3,6 @@ package config
 import (
 	"log"
 
-	"github.com/fsnotify/fsnotify"
 	easyconfig "github.com/spf13/viper"
 )
 
@@ -50,12 +49,6 @@ func InitConfig(c string, hasLog bool) {
 		log.Fatal("读取配置文件失败，请检查 config.yaml 配置文件是否存在: %v", err)
 	}
 
-	// 初始化日志
-	if hasLog {
-		initLog()
-		// 热更新配置文件
-		watchConfig()
-	}
 	// 初始化 apps 配置
 	AppConfig = newAppConfig()
 	// 初始化数据库配置,通过GORM初始化参数为全局变量
@@ -64,12 +57,4 @@ func InitConfig(c string, hasLog bool) {
 	MailConfig = NewMailConfig()
 }
 
-// 监控配置文件变化
-func watchConfig() {
-	easyconfig.WatchConfig()
-	easyconfig.OnConfigChange(func(ev fsnotify.Event) {
-		// 配置文件更新了
-		log.Println("Config file changed: %s", ev.Name)
-	})
-}
 
