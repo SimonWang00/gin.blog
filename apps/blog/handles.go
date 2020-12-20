@@ -19,7 +19,7 @@ func HomeHandler(c *gin.Context)  {
 	articles := dao.QueryLatestAriticle()
 	messages := dao.QueryLatestMessage()
 	works := dao.QueryLatestWork()
-	c.HTML(http.StatusOK, "index.html",gin.H{
+	c.HTML(http.StatusOK, "blog/index.html",gin.H{
 		"articles":articles,
 		"messages":messages,
 		"works":works,
