@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"gin.blog/apps/admin"
 	"github.com/gin-gonic/gin"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
@@ -11,8 +12,8 @@ import (
 
 // Register 注册路由和中间件
 func SetRegisterRouters() *gin.Engine {
-	// 加载不同app的路由, 加载bijiav1
-	Include(blog.LoadBlog)
+	// 加载不同app的路由, 加载博客和后台管理系统
+	Include(blog.LoadBlog, admin.LoadAdmin)
 	// 加载路由启动
 	g := Init()
 	// ---------------------------------- 注册全局中间件 ----------------------------------
