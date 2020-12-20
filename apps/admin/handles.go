@@ -61,7 +61,7 @@ func AdminLoginHandler(c *gin.Context)  {
 			status := "success"
 			dao.AddLog(username, ipport, status)
 			//c.HTML(http.StatusOK, "admin/index.html", "")
-			c.Redirect(http.StatusPermanentRedirect,"http://127.0.0.1:8081/admin/index.html")
+			c.Redirect(http.StatusPermanentRedirect,"/admin/index.html")
 			return
 		}
 		c.HTML(http.StatusOK, "admin/reload.html", gin.H{

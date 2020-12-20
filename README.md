@@ -43,3 +43,10 @@ docker build . -t gin.blog:v1.0.0
 docker run -p 8081:8081 -d "镜像"
 ```
 
+
+
+# 在线访问
+
+访问地址：http://106.52.120.86:8081/
+
+后台账号密码：admin/admin
